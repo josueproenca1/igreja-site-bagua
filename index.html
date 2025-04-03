@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Últimos Vídeos da Igreja</title>
+    <link rel="stylesheet" href="img/reset.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="img/styles.css">
+    <link rel="stylesheet" href="img/topicos.css">
+    <link rel="stylesheet" href="img/rodapé.css">
+    <link rel="stylesheet" href="img/header.css">
+    <link rel="stylesheet" href="img/contato.css">
+    <link rel="stylesheet" href="img/carrossel.css">
+    <link rel="stylesheet" href="img/banner.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: white;
+            color: black;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+        }
+        .video-section {
+            max-width: 90%;
+            margin: auto;
+            padding: 20px;
+        }
+        .video-main iframe, .video-list iframe {
+            width: 100%;
+            border-radius: 8px;
+        }
+        .live-container {
+            text-align: center;
+            padding: 20px;
+        }
+        .recent-videos {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 15px;
+            padding: 20px;
+        }
+        .video-item {
+            width: 300px;
+        }
+        .footer {
+            background-color: #034f27;
+            padding: 20px;
+            margin-top: 30px;
+        }
+        .footer h3 {
+            color: white;
+            margin-bottom: 15px;
+        }
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+        .social-links a {
+            text-decoration: none;
+        }
+        .social-links img {
+            width: 60px;
+            height: auto;
+            border-radius: 10px;
+            transition: transform 0.3s ease;
+        }
+        .social-links img:hover {
+            transform: scale(1.1);
+        }
+        @media (max-width: 768px) {
+            .recent-videos {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+<header class="cabeçalho">
+    <div class="container-menu">
+        <input type="checkbox" id="menu" class="container__botao">
+        <label for="menu">
+            <span class="cabeçalho__menu-hamburguer container__imagem"></span>
+        </label>
+        <ul class="lista-menu">
+            <li class="lista-menu__titulo">Categorias</li>
+            <li class="lista-menu__item"><a href="index1.html" class="lista-menu__link">Notícias</a></li>
+            <li class="lista-menu__item"><a href="index2.html" class="lista-menu__link">Rede de Apoio</a></li>
+            <li class="lista-menu__item"><a href="index3.html" class="lista-menu__link">História da Igreja</a></li>
+        </ul>
+    </div>
+</header>
+
+<h1>Últimos Vídeos da Igreja</h1>
+
+<!-- Live da Igreja -->
+<section class="live-container">
+    <h2>🔴 Transmissão Ao Vivo</h2>
+    <div id="live-video">Carregando...</div>
+</section>
+
+<!-- Vídeos Recentes -->
+<section class="video-section">
+    <h2>📹 Vídeos Mais Recentes</h2>
+    <div class="recent-videos" id="video-container">Carregando vídeos...</div>
+</section>
+
+<!-- Rodapé com Redes Sociais -->
+<footer class="footer">
+    <h3>Nos siga nas redes sociais:</h3>
+    <div class="social-links">
+        <a href="https://www.youtube.com/@ipbavsjs" target="_blank">
+            <img src="img/youtube-logo-youtube-logo-transparent-youtube-icon-transparent-free-free-png.webp" alt="YouTube da Igreja">
+        </a>
+        <a href="https://ipb.org.br" target="_blank">
+            <img src="img/R (1).png" alt="instagram ipb">
+        </a>
+    </div>
+</footer>
+
+<script>
+    const API_KEY = "AIzaSyAXB6-5zEKMq8hsQ3HB8IFymhfTQzZIZ10";  
+    const CHANNEL_ID = "UC4auA0lUGRMyk7_5kwFIskA";
+    const MAX_RESULTS = 6;
+
+    async function fetchLiveStream() {
+        const url = `https://www.googleapis.com/youtube/v3/search?key=${API_KEY}&channelId=${CHANNEL_ID}&part=snippet,id&eventType=live&type=video`;
+        try {
+            const response = await fetch(url);
+            const data = await response.json();
+            const liveVideo = document.getElementById('live-video');
+            
+            if (data.items.length > 0) {
+                liveVideo.innerHTML = `<iframe width="600" height="340" src="https://www.youtube.com/embed/${data.items[0].id.videoId}" allowfullscreen></iframe>`;
+            } else {
+                liveVideo.innerHTML = "<p>Nenhuma live ativa no momento.</p>";
+            }
+        } catch (error) {
+            console.error('Erro ao buscar live:', error);
+            liveVideo.innerHTML = '<p>Falha ao carregar a live.</p>';
+        }
+    }
+    async function fetchLatestVideos() {
+        const url = `https://www.googleapis.com/youtube/v3/search?key=${API_KEY}&channelId=${CHANNEL_ID}&part=snippet,id&order=date&maxResults=${MAX_RESULTS}`;
+        try {
+            const response = await fetch(url);
+            const data = await response.json();
+            const videos = data.items;
+            const videoContainer = document.getElementById('video-container');
+            videoContainer.innerHTML = '';
+
+            videos.forEach(video => {
+                if (video.id.videoId) {
+                    const videoElement = document.createElement('div');
+                    videoElement.classList.add('video-item');
+                    videoElement.innerHTML = `<iframe height="180" src="https://www.youtube.com/embed/${video.id.videoId}" allowfullscreen></iframe>`;
+                    videoContainer.appendChild(videoElement);
+                }
+            });
+        } catch (error) {
+            console.error('Erro ao buscar vídeos:', error);
+            document.getElementById('video-container').innerText = 'Falha ao carregar vídeos.';
+        }
+    }
+
+    fetchLiveStream();
+    fetchLatestVideos();
+</script>
+</body>
+</html>

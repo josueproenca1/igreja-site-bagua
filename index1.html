@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Igreja Presbiteriana</title>
+    <link rel="stylesheet" href="img/reset.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+    <link rel="stylesheet" href="img/styles.css">
+    <link rel="stylesheet" href="img/topicos.css">
+    <link rel="stylesheet" href="img/rodapé.css">
+    <link rel="stylesheet" href="img/header.css">
+    <link rel="stylesheet" href="img/contato.css">
+    <link rel="stylesheet" href="img/carrossel.css">
+    <link rel="stylesheet" href="img/banner.css">    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+        header {
+            background-color: #034f27;
+            color: white;
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .menu {
+            list-style: none;
+            display: flex;
+            gap: 15px;
+        }
+        .menu li a {
+            color: white;
+            text-decoration: none;
+        }
+        .hamburguer {
+            display: none;
+            font-size: 24px;
+            cursor: pointer;
+        }
+        .destaques {
+            display: flex;
+            gap: 20px;
+            padding: 20px;
+            justify-content: center;
+        }
+        .card {
+            background: white;
+            padding: 20px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+            width: 300px;
+            border-radius: 8px;
+        }
+        .card button {
+            background: #034f27;
+            color: white;
+            border: none;
+            padding: 10px;
+            width: 100%;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        @media (max-width: 768px) {
+            .menu {
+                display: none;
+                flex-direction: column;
+                position: absolute;
+                background: #034f27;
+                width: 100%;
+                left: 0;
+                top: 60px;
+                padding: 10px;
+            }
+            .menu.active {
+                display: flex;
+            }
+            .hamburguer {
+                display: block;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="cabeçalho">
+        <div class="container-menu"> <!-- Alterado de "container" para "container-menu" -->
+            <input type="checkbox" id="menu" class="container__botao">
+            <label for="menu">
+                <span class="cabeçalho__menu-hamburguer container__imagem"></span>
+            </label>
+            <ul class="lista-menu">
+                <li class="lista-menu__titulo">Categorias</li>
+                <li class="lista-menu__item"><a href="index.html" class="lista-menu__link">inicio</a></li>
+                <li class="lista-menu__item"><a href="index2.html" class="lista-menu__link">Rede de Apoio</a></li>
+                <li class="lista-menu__item"><a href="index3.html" class="lista-menu__link">História da Igreja</a></li>
+            </ul>
+        </div>
+    </header>
+    
+    
+    <main>
+        <section class="destaques">
+            <div class="card">
+                <h3>Projetos da igreja</h3>
+                <p>projetos como acampamento dos jovens para nossa igreja</p>
+                <div class="img-container">
+                    <img src="img/historia.jpg" alt="Imagem sobre a história da igreja">
+                </div>
+                <button>Ler</button>
+            </div>
+            <div class="card">
+                <h3>palavra e pregador da semana</h3>
+                <p>nossa palavra dessa semana</p>
+                <div class="img-container">
+                    <img src="img/historia.jpg" alt="Imagem sobre a história da igreja">
+                </div>
+                <button>Ler</button>
+            </div>
+            <div class="card">
+                <h3>louvor e escalação da semana</h3>
+                <p>nossas musicas da semana</p>
+                <div class="img-container">
+                    <img src="img/historia.jpg" alt="Imagem sobre a história da igreja">
+                </div>
+                <button>Ler</button>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        function toggleMenu() {
+            document.querySelector('.menu').classList.toggle('active');
+        }
+    </script>
+</body>
+</html>
